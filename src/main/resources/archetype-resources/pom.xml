@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>${groupId}</groupId>
+    <artifactId>${artifactId}</artifactId>
+    <version>${version}</version>
+    <packaging>war</packaging>
+
+    <!--    https://maven.apache.org/plugins/maven-war-plugin/plugin-info.html -->
+
+    <build>
+        <!--        <finalName>web-ejb-project</finalName>-->
+        <finalName>${artifactId}-${version}</finalName>
+        <sourceDirectory>${src.dir}</sourceDirectory>
+
+<!-- https://maven.apache.org/guides/mini/guide-creating-archetypes.html
+     https://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html -->
+        <pluginManagement>
+            <plugins>
+                <!--                <plugin>
+                                    <artifactId>maven-compiler-plugin</artifactId>
+                                    <version>3.8.1</version>
+                                </plugin>
+                                <plugin>
+                                    <artifactId>maven-surefire-plugin</artifactId>
+                                    <version>2.22.2</version>
+                                </plugin>-->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <configuration>
+                        <!--                        <webappDirectory>${project.basedir}/target</webappDirectory>-->
+                        <!--                        <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>-->
+                        <!-- Optionally specify where the web.xml file comes from -->
+                        <webXml>${project.basedir}/web/WEB-INF/web.xml</webXml>
+                        <!-- Optionally specify extra resources to include -->
+                        <webResources>
+
+                            <resource>
+                                <directory>${project.basedir}/web/WEB-INF</directory>
+                                <filtering>true</filtering>
+
+                                <targetPath>WEB-INF</targetPath>
+                                <includes>
+                                    <include>**/*</include>
+                                </includes>
+                            </resource>
+                            <!-- https://stackoverflow.com/a/36484906/9586230 -->
+                            <resource>
+                                <directory>${src.dir}/META-INF</directory>
+                                <filtering>true</filtering>
+
+                                <targetPath>WEB-INF/classes/META-INF</targetPath>
+                                <includes>
+                                    <include>**/persistence.xml</include>
+                                </includes>
+                            </resource>
+
+                        </webResources>
+                        <warSourceDirectory>web</warSourceDirectory>
+                        <archiveClasses>false</archiveClasses>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>8.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <properties>
+        <src.dir>src</src.dir>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+</project>
