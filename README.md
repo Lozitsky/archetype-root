@@ -3,7 +3,7 @@
 
 > #### Prepare the project structure. Define default folders and files.
 > ```bash
-> .
+> archetype_root
 > ├── pom.xml
 > ├── README.md
 > ├── src
@@ -54,19 +54,19 @@
 > ##### Create a new folder in the work directory and type:
 >```bash
 >
->sudo mvn archetype:generate \\
->-DarchetypeGroupId=com.kirilo \\
->-DarchetypeArtifactId=web-ejb \\
->-DarchetypeVersion=1.0.1 \\
->-DgroupId=com.kirilo.webejb \\
->-DartifactId=web-ejb \\
->-Dversion=1.0-SNAPSHOT \\
+>sudo mvn archetype:generate \
+>-DarchetypeGroupId=com.kirilo \
+>-DarchetypeArtifactId=web-ejb \
+>-DarchetypeVersion=1.0.1 \
+>-DgroupId=com.kirilo.webejb \
+>-DartifactId=web-ejb \
+>-Dversion=1.0-SNAPSHOT \
 >-DinteractiveMode=false -X 
 >```
 
 > #### The project template is created and will be look like as follows:
 >```bash
-> .
+> new_project
 > └── web-ejb
 >    ├── bash.sh
 >    ├── db
@@ -102,7 +102,7 @@
 > ```
 > The following files will be added to the project into target folder:
 > ```bash
-> .
+> target
 > ├── classes
 > │   └── com
 > │       └── kirilo
@@ -144,7 +144,7 @@
 
 >##### The following files will be attached to the war archive:
 > ```bash
-> .
+> web-ejb-1.0-SNAPSHOT.war
 > ├── META-INF
 > └── WEB-INF
 > ├── beans.xml
