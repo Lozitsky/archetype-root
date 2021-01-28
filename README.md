@@ -36,7 +36,7 @@
 
 > ##### Go to the folder of the created project and type:
 >```bash
->sudo mvn clean install
+>mvn clean install
 >```
 
 >##### The archetype is created. 
@@ -54,10 +54,10 @@
 > ##### Create a new folder in the work directory and type:
 >```bash
 >
->sudo mvn archetype:generate \
+>mvn archetype:generate \
 >-DarchetypeGroupId=com.kirilo \
 >-DarchetypeArtifactId=web-ejb \
->-DarchetypeVersion=1.0.1 \
+>-DarchetypeVersion=1.0.0 \
 >-DgroupId=com.kirilo.webejb \
 >-DartifactId=web-ejb \
 >-Dversion=1.0-SNAPSHOT \
@@ -139,12 +139,12 @@
 > │       │   ├── ejb-jar.xml
 > │       │   └── MANIFEST.MF
 > │       └── web.xml
-> └── web-ejb-1.0-SNAPSHOT.war
+> └── web-ejb.war
 >```
 
 >##### The following files will be attached to the war archive:
 > ```bash
-> web-ejb-1.0-SNAPSHOT.war
+> web-ejb.war
 > ├── META-INF
 > └── WEB-INF
 > ├── beans.xml
@@ -164,3 +164,21 @@
 > └── web.xml
 > ```
 
+> #### Run with TomEE APP Server
+> ```bash
+> mvn package tomee:run
+> ``` 
+> after typing in the terminal
+> ```bash
+> curl localhost:8080/web-ejb/
+> ```
+>  we will receive:
+>```html
+> <html><body><h1>Hello simple WebServlet!</h1><h1>Hello EJB!!</h1><h1>Hello CDI!!</h1></body></html>
+> ```
+> Or type in the browser:
+> ```text
+> localhost:8080/web-ejb/
+> ```
+> 
+> <html><body><h1>Hello simple WebServlet!</h1><h1>Hello EJB!!</h1><h1>Hello CDI!!</h1></body></html>

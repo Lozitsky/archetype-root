@@ -11,8 +11,8 @@
     <!--    https://maven.apache.org/plugins/maven-war-plugin/plugin-info.html -->
 
     <build>
-        <!--        <finalName>web-ejb-project</finalName>-->
-        <finalName>${artifactId}-${version}</finalName>
+<!--        <finalName>${artifactId}-${version}</finalName>-->
+        <finalName>${artifactId}</finalName>
         <sourceDirectory>${src.dir}</sourceDirectory>
 
 <!-- https://maven.apache.org/guides/mini/guide-creating-archetypes.html
@@ -64,6 +64,18 @@
                         <archiveClasses>false</archiveClasses>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.tomee.maven</groupId>
+                    <artifactId>tomee-maven-plugin</artifactId>
+                    <version>8.0.5</version>
+                    <configuration>
+                        <tomeeClassifier>plume</tomeeClassifier>
+                        <args>-Xmx512m -XX:PermSize=256m</args>
+                        <removeDefaultWebapps>false</removeDefaultWebapps>
+                    </configuration>
+                </plugin>
+
             </plugins>
         </pluginManagement>
 
@@ -71,10 +83,16 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+<!--        <dependency>-->
+<!--            <groupId>javax</groupId>-->
+<!--            <artifactId>javaee-api</artifactId>-->
+<!--            <version>8.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <version>8.0.0</version>
             <scope>provided</scope>
         </dependency>
 
