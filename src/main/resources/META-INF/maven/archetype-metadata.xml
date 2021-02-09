@@ -8,6 +8,14 @@
             <directory>db</directory>
             <includes>
                 <include>*.sql</include>
+                <include>custom.cnf</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="true" encoding="UTF-8">
+            <directory>infrastructure</directory>
+            <includes>
+                <include>*.sh</include>
+                <include>docker-compose.yml</include>
             </includes>
         </fileSet>
         <fileSet filtered="true" packaged="true" encoding="UTF-8">
@@ -38,7 +46,16 @@
                 <include>.gitignore</include>
                 <include>README.md</include>
                 <include>Dockerfile</include>
-                <include>bash.sh</include>
+            </includes>
+        </fileSet>
+        <fileSet filtered="false" encoding="UTF-8">
+            <directory>tomee/conf</directory>
+            <includes>
+                <include>tomee.xml</include>
+                <include>tomcat-users.xml</include>
+                <include>settings.xml</include>
+                <include>context.xml</include>
+                <include>server.xml</include>
             </includes>
         </fileSet>
     </fileSets>

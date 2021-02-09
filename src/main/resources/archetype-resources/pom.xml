@@ -11,22 +11,28 @@
     <!--    https://maven.apache.org/plugins/maven-war-plugin/plugin-info.html -->
 
     <build>
-<!--        <finalName>${artifactId}-${version}</finalName>-->
         <finalName>${artifactId}</finalName>
         <sourceDirectory>${src.dir}</sourceDirectory>
 
-<!-- https://maven.apache.org/guides/mini/guide-creating-archetypes.html
-     https://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html -->
+        <!--        https://maven.apache.org/guides/mini/guide-creating-archetypes.html-->
+        <!--        https://maven.apache.org/plugins/maven-war-plugin/examples/adding-filtering-webresources.html -->
         <pluginManagement>
             <plugins>
-                <!--                <plugin>
-                                    <artifactId>maven-compiler-plugin</artifactId>
-                                    <version>3.8.1</version>
-                                </plugin>
-                                <plugin>
-                                    <artifactId>maven-surefire-plugin</artifactId>
-                                    <version>2.22.2</version>
-                                </plugin>-->
+
+                <!--            http://tutorials.jenkov.com/maven/java-compiler.html -->
+                <!--            https://www.baeldung.com/maven-java-version#java9 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <!--                        <release>${java.version}</release>-->
+                        <!--                        <compilerArgs>&#45;&#45;enable-preview</compilerArgs>-->
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-war-plugin</artifactId>
@@ -59,6 +65,16 @@
                                 </includes>
                             </resource>
 
+                            <resource>
+                                <directory>${project.basedir}/db</directory>
+                                <filtering>true</filtering>
+
+                                <targetPath>WEB-INF/db</targetPath>
+                                <includes>
+                                    <include>**/*.sql</include>
+                                </includes>
+                            </resource>
+
                         </webResources>
                         <warSourceDirectory>web</warSourceDirectory>
                         <archiveClasses>false</archiveClasses>
@@ -68,27 +84,67 @@
                 <plugin>
                     <groupId>org.apache.tomee.maven</groupId>
                     <artifactId>tomee-maven-plugin</artifactId>
-                    <version>8.0.5</version>
+                    <version>${tomee.version}</version>
                     <configuration>
-                        <tomeeClassifier>plume</tomeeClassifier>
+                        <tomeeClassifier>${tomee.flavour}</tomeeClassifier>
                         <args>-Xmx512m -XX:PermSize=256m</args>
                         <removeDefaultWebapps>false</removeDefaultWebapps>
+                        <config>tomee/conf</config>
+                        <libs>
+                            <lib>mysql:mysql-connector-java:${mysql.version}</lib>
+                        </libs>
                     </configuration>
                 </plugin>
 
             </plugins>
         </pluginManagement>
 
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>build docker image</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <target>
+                                <chmod file="${basedir}/infrastructure/build.sh" perm="a+x"/>
+                                <exec dir="${basedir}/infrastructure/" executable="${basedir}/infrastructure/build.sh"/>
+                                <!--
+                                  Place any Ant task here. You can add anything
+                                  you can add between <target> and </target> in a
+                                  build.xml.
+                                -->
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
     </build>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
-<!--        <dependency>-->
-<!--            <groupId>javax</groupId>-->
-<!--            <artifactId>javaee-api</artifactId>-->
-<!--            <version>8.0</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+        <!--        <dependency>
+                    <groupId>javax</groupId>
+                    <artifactId>javaee-api</artifactId>
+                    <version>8.0</version>
+                    <scope>provided</scope>
+                </dependency>-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-api</artifactId>
@@ -100,12 +156,16 @@
 
     <properties>
         <src.dir>src</src.dir>
-
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <!--        https://stackoverflow.com/a/51692749/9586230 -->
+        <java.version>8</java.version>
+        <!--        <maven.compiler.source>1.8</maven.compiler.source>-->
+        <!--        <maven.compiler.target>1.8</maven.compiler.target>-->
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <tomee.version>8.0.5</tomee.version>
+        <tomee.flavour>plume</tomee.flavour>
+        <mysql.version>8.0.21</mysql.version>
     </properties>
 
 </project>
