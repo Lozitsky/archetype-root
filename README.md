@@ -55,7 +55,7 @@
 >```bash
 >
 >mvn archetype:generate \
->-DarchetypeGroupId=com.kirilo \
+>-DarchetypeGroupId=com.github.Lozitsky \
 >-DarchetypeArtifactId=web-ejb \
 >-DarchetypeVersion=1.0.0 \
 >-DgroupId=com.kirilo.webejb \
@@ -191,7 +191,7 @@
 >  
 >\$ cd new_project
 >\$ mvn archetype:generate \
-> -DarchetypeGroupId=com.kirilo \
+> -DarchetypeGroupId=com.github.Lozitsky \
 > -DarchetypeArtifactId=web-ejb \
 > -DarchetypeVersion=1.0.1 \
 > -DgroupId=com.kirilo.webejb \
@@ -210,7 +210,7 @@
 
 <br><br>
 >## web-ejb:1.0.2
-> ===
+> 
 > Startup inside Docker containers.
 > 
 >Created by docker-compose.yml
@@ -228,7 +228,7 @@
 > 
 >\$ cd new_project   
 >\$ mvn archetype:generate \
-> -DarchetypeGroupId=com.kirilo \
+> -DarchetypeGroupId=com.github.Lozitsky \
 > -DarchetypeArtifactId=web-ejb \
 > -DarchetypeVersion=1.0.2 \
 > -DgroupId=com.kirilo \
